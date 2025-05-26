@@ -1,19 +1,14 @@
 import { test, expect } from '@playwright/test';
-import * as dotenv from 'dotenv';
-import { LoginPage } from '../pages/LoginPage';
 import { ProductsPage } from '../pages/ProductsPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 
-dotenv.config();
-
-test.describe('Checkout Feature Test', () => {
+test.describe('Checkout Feature Test without login in test', () => {
   test('Complete checkout process after adding a product', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const checkoutPage = new CheckoutPage(page);
 
-    await loginPage.goto();
-    await loginPage.login(process.env.APP_USERNAME!, process.env.APP_PASSWORD!);
+    // نذهب مباشرة إلى صفحة المنتجات لأننا مفترضين الجلسة محفوظة
+    await page.goto('/inventory.html');
 
     await productsPage.addFirstProductToCart();
     await checkoutPage.openCart();

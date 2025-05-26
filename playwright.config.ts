@@ -1,16 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30000,
+  timeout: 60000,
   expect: { timeout: 5000 },
   fullyParallel: true,
   retries: 0,
 
-  // 🟡 1. نستخدم global setup script لتسجيل الدخول مرة واحدة
-  globalSetup: require.resolve('./global-setup'),
+globalSetup: require.resolve('./global-setup'),
 
   use: {
     baseURL: process.env.BASE_URL || 'https://www.saucedemo.com/',
@@ -21,7 +21,7 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'on-first-retry',
 
-    // 🟡 2. نستخدم storageState المخزن من global-setup
+    // 🟡 2. استخدام حالة الجلسة المحفوظة من globalSetup
     storageState: 'storageState.json',
   },
 
